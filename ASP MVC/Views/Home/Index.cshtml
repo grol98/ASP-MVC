@@ -1,0 +1,120 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Заказы</h1>
+    <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#add_order">Сделать заказ</button>
+    <table class="table">
+        <tr>
+            <td>Номер заказа</td>
+            <td>Город отправителя</td>
+            <td>Адрес отправителя</td>
+            <td>Город получателя</td>
+            <td>Адрес получателя</td>
+            <td>Вес груза(кг)</td>
+            <td>Дата забора груза</td>
+        </tr>
+        @foreach (var order in Model)
+        {
+            <tr id="@order.Id" class="order_tr" data-bs-toggle="modal" data-bs-target="#show_order" onclick="ShowOrder(@order.Id)">
+                <td id="@($"Number{order.Id}")">@order.Number</td>
+                <td id="@($"SendersCity{order.Id}")">@order.SendersCity</td>
+                <td id="@($"SendersAddress{order.Id}")">@order.SendersAddress</td>
+                <td id="@($"ReceiversCity{order.Id}")">@order.ReceiversCity</td>
+                <td id="@($"ReceiversAddress{order.Id}")">@order.ReceiversAddress</td>
+                <td id="@($"CargoWeight{order.Id}")">@order.CargoWeight</td>
+                <td id="@($"DateOfCargoPickup{order.Id}")">@order.DateOfCargoPickup</td>
+            </tr>
+        }
+    </table>
+</div>
+
+<div class="modal fade" id="add_order" tabindex="-1" aria-labelledby="add_order_label" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="add_order_label">Создание заказа</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="add_form" class="text-center" action="Home/NewOrder" method="post">
+                    <p>
+                        <label>Город отправителя</label><br>
+                        <input name="SendersCity" required autocomplete="off" />
+                    </p>
+                    <p>
+                        <label>Адрес отправителя</label><br>
+                        <input name="SendersAddress" required autocomplete="off" />
+                    </p>
+                    <p>
+                        <label>Город получателя</label><br>
+                        <input name="ReceiversCity" required autocomplete="off" />
+                    </p>
+                    <p>
+                        <label>Адрес получателя</label><br>
+                        <input name="ReceiversAddress" required autocomplete="off" />
+                    </p>
+                    <p>
+                        <label>Вес груза(кг)</label><br>
+                        <input name="CargoWeight" type="number" required autocomplete="off" />
+                    </p>
+                    <p>
+                        <label>Дата забора груза</label><br>
+                        <input name="DateOfCargoPickup" type="date" required />
+                    </p>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+                <input form="add_form" class="btn btn-secondary" type="submit" name="submit" value="Отправить" />
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="show_order" tabindex="-1" aria-labelledby="show_order_label" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="show_order_label">Заказ</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form class="text-center" action="Home/NewOrder" method="post">
+                    <p>
+                        <label>Номер заказа</label><br>
+                        <input id="show_order_number" readonly />
+                    </p>
+                    <p>
+                        <label>Город отправителя</label><br>
+                        <input id="show_order_senders_city" readonly />
+                    </p>
+                    <p>
+                        <label>Адрес отправителя</label><br>
+                        <input id="show_order_senders_address" readonly />
+                    </p>
+                    <p>
+                        <label>Город получателя</label><br>
+                        <input id="show_order_receivers_city" readonly />
+                    </p>
+                    <p>
+                        <label>Адрес получателя</label><br>
+                        <input id="show_order_receivers_address" readonly />
+                    </p>
+                    <p>
+                        <label>Вес груза(кг)</label><br>
+                        <input id="show_order_cargo_weight" type="number" readonly />
+                    </p>
+                    <p>
+                        <label>Дата забора груза</label><br>
+                        <input id="show_order_date_of_cargo_pickup" readonly />
+                    </p>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Назад</button>
+            </div>
+        </div>
+    </div>
+</div>
